@@ -8,13 +8,11 @@ app = FastAPI(title="Quant AI Server")
 # Spring에서 받는 입력 형태
 class AgentRequest(BaseModel):
     user_id: int
-    risk_level: str           # AGGRESSIVE / NEUTRAL / CONSERVATIVE
-    investment_amount: int    # 투자 가능 금액 (원)
-    # 17일 확정 후 추가 예정
-    # investment_goal: str
-    # risk_score: int
-    # investment_period: str
-    # risk_type: str
+    investmentGoal: str          # 투자 목표 텍스트
+    riskTolerance: int           # 리스크 수용 정도 (1~5)
+    investmentPeriod: str        # UNDER_1Y / 1Y_TO_3Y / 3Y_TO_5Y / OVER_5Y
+    investableAmount: int        # 투자 가능 금액
+    profileType: str             # AGGRESSIVE / NEUTRAL / STABLE
 
 # Spring으로 돌려주는 응답 형태
 class PortfolioResponse(BaseModel):
@@ -36,8 +34,8 @@ def run_agent(request: AgentRequest):
     graph = build_graph()
     result = graph.invoke({
         "user_id": request.user_id,
-        "risk_level": request.risk_level,
-        "investment_amount": request.investment_amount,
+        "risk_level": request.profileType,
+        "investment_amount": request.investableAmount,
         "price_data": {},
         "indicators": {},
         "strategy_result": {},
@@ -54,7 +52,7 @@ def run_agent(request: AgentRequest):
         portfolio=result.get("portfolio", {}),
         backtest_result=result.get("backtest_result", {}),
         portfolio_reason=result.get("portfolio_reason", ""),
-        risk_type=request.risk_level
+        risk_type=request.profileType
     )
 
 @app.post("/report/generate")

@@ -8,7 +8,7 @@ class AgentState(TypedDict):
 
     # ── 입력값 (현정 → Python 서버로 전달) ──────────────────
     user_id:           int    # 사용자 ID
-    risk_level:        str    # AGGRESSIVE / NEUTRAL / CONSERVATIVE
+    risk_level:        str    # AGGRESSIVE / NEUTRAL / STABLE
     investment_amount: int    # 투자 가능 금액 (원)
 
     # ── 희재 담당 (주가 수집 · 지표 계산 · 전략 · 백테스트) ──
