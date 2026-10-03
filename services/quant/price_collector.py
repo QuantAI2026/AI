@@ -13,7 +13,7 @@ TICKERS_OVERSEAS = []
 TICKERS_DOMESTIC = STOCK_CODES  # config.py에서 가져옴
 
 # ── 재시도 로직 ──────────────────────────────────────────────
-def _download_with_retry(ticker: str, period: str = "1y", max_retry: int = 3) -> pd.DataFrame:
+def _download_with_retry(ticker: str, period: str = "2y", max_retry: int = 3) -> pd.DataFrame:
     delay = 1
     for attempt in range(1, max_retry + 1):
         try:
