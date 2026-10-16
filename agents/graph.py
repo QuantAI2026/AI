@@ -53,9 +53,9 @@ if __name__ == "__main__":
     result = app.invoke({
         "user_id": 1,
         "risk_level": "NEUTRAL",
-        "investment_amount": 10000000,
-        "investment_goal": "균형 잡힌 수익",
-        "risk_tolerance": 3,
+        "investment_amount": 5000000,
+        "investment_goal": "안정적 수익",
+        "risk_tolerance": 2,
         "investment_period": "OVER_5Y",
         "price_data": {},
         "indicators": {},
@@ -76,7 +76,9 @@ if __name__ == "__main__":
     print("\n" + "="*50)
     print("포트폴리오")
     print("="*50)
+    for err in result.get("error_log", []):
+        print(err)
     for code, data in result.get("portfolio", {}).items():
         print(f"\n{data['name']}({code}) - {data['weight']*100:.1f}%")
         print(f"금액: {data['amount']:,}원")
-        print(f"추천 근거: {data['reason'][:100]}...")
+        print(f"추천 근거:\n{data['reason']}")
